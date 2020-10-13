@@ -22,10 +22,124 @@ public class CanastaPlayer {
     private ArrayList<Card> meldedQueen = new ArrayList<>();
     private ArrayList<Card> meldedKing = new ArrayList<>();
 
+    private ArrayList<Integer> playerMoves = new ArrayList<>();
+
     public CanastaPlayer(int num) {
         score = 0;
         hand = new ArrayList<>();
         playerNum = num;
+        totalScore = 0;
+    }
+
+    public CanastaPlayer(CanastaPlayer orig) {
+        score = orig.score;
+        for (Card c: orig.hand) {
+            this.hand.add(new Card(c));
+        }
+        for (Card c: orig.meldedAce) {
+            this.meldedAce.add(new Card(c));
+        }
+        for (Card c: orig.meldedWild) {
+            this.meldedWild.add(new Card(c));
+        }
+        for (Card c: orig.melded3) {
+            this.melded3.add(new Card(c));
+        }
+        for (Card c: orig.melded4) {
+            this.melded4.add(new Card(c));
+        }
+        for (Card c: orig.melded5) {
+            this.melded5.add(new Card(c));
+        }
+        for (Card c: orig.melded6) {
+            this.melded6.add(new Card(c));
+        }
+        for (Card c: orig.melded7) {
+            this.melded7.add(new Card(c));
+        }
+        for (Card c: orig.melded8) {
+            this.melded8.add(new Card(c));
+        }
+        for (Card c: orig.melded9) {
+            this.melded9.add(new Card(c));
+        }
+        for (Card c: orig.melded10) {
+            this.melded10.add(new Card(c));
+        }
+        for (Card c: orig.meldedJack) {
+            this.meldedJack.add(new Card(c));
+        }
+        for (Card c: orig.meldedQueen) {
+            this.meldedQueen.add(new Card(c));
+        }
+        for (Card c: orig.meldedKing) {
+            this.meldedKing.add(new Card(c));
+        }
+        for (Integer v: orig.playerMoves) {
+            this.playerMoves.add(v);
+        }
+        playerNum = orig.playerNum;
+        totalScore = orig.totalScore;
+    }
+
+    public CanastaPlayer(CanastaPlayer orig, boolean copyHand) {
+        score = orig.score;
+        if (copyHand) {
+            for (Card c: orig.hand) {
+                this.hand.add(new Card(c));
+            }
+        }
+        else {
+            for (Card c: orig.hand) {
+                if (c.getKnownCard()) {
+                    this.hand.add(new Card(c));
+                }
+            }
+        }
+        for (Card c: orig.meldedAce) {
+            this.meldedAce.add(new Card(c));
+        }
+        for (Card c: orig.meldedWild) {
+            this.meldedWild.add(new Card(c));
+        }
+        for (Card c: orig.melded3) {
+            this.melded3.add(new Card(c));
+        }
+        for (Card c: orig.melded4) {
+            this.melded4.add(new Card(c));
+        }
+        for (Card c: orig.melded5) {
+            this.melded5.add(new Card(c));
+        }
+        for (Card c: orig.melded6) {
+            this.melded6.add(new Card(c));
+        }
+        for (Card c: orig.melded7) {
+            this.melded7.add(new Card(c));
+        }
+        for (Card c: orig.melded8) {
+            this.melded8.add(new Card(c));
+        }
+        for (Card c: orig.melded9) {
+            this.melded9.add(new Card(c));
+        }
+        for (Card c: orig.melded10) {
+            this.melded10.add(new Card(c));
+        }
+        for (Card c: orig.meldedJack) {
+            this.meldedJack.add(new Card(c));
+        }
+        for (Card c: orig.meldedQueen) {
+            this.meldedQueen.add(new Card(c));
+        }
+        for (Card c: orig.meldedKing) {
+            this.meldedKing.add(new Card(c));
+        }
+        for (Integer v: orig.playerMoves) {
+            this.playerMoves.add(v);
+        }
+        playerNum = orig.playerNum;
+        totalScore = orig.totalScore;
     }
 
 
@@ -150,5 +264,9 @@ public class CanastaPlayer {
 
     public void setMeldedKing(ArrayList<Card> meldedKing) {
         this.meldedKing = meldedKing;
+    }
+
+    public ArrayList<Integer> getPlayerMoves() {
+        return playerMoves;
     }
 }

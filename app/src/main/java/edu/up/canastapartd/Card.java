@@ -30,4 +30,5 @@ public class Card {
     public char getSuit() {
         return suit;
     }
+    public boolean getKnownCard() { return knownCard; }
 }
