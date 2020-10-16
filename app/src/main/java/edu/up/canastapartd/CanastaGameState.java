@@ -33,6 +33,7 @@ public class CanastaGameState implements Button.OnClickListener {
         player1 = null;
         player2 = null;
         playerTurnID = 0;
+        start();
     }
 
     /**
@@ -365,38 +366,43 @@ public class CanastaGameState implements Button.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        this.start();
-        //building pre-defined hand for testing
-        Card addedCard = new Card(5,'H');
-        this.player1.getHand().add(addedCard);
-        this.player1.getHand().add(addedCard);
-        this.player1.getHand().add(addedCard);
-        this.player1.getHand().add(addedCard);
+//        this.start();
+//        //building pre-defined hand for testing
+//        Card addedCard = new Card(5,'H');
+//        this.player1.getHand().add(addedCard);
+//        this.player1.getHand().add(addedCard);
+//        this.player1.getHand().add(addedCard);
+//        this.player1.getHand().add(addedCard);
 
         CanastaGameState firstInstance = new CanastaGameState();
-        firstInstance.start();
+        //firstInstance = this;
+
         firstInstance.setTextView(outText);
+        Card addedCard = new Card(5,'H');
+        firstInstance.player1.getHand().add(addedCard);
+        firstInstance.player1.getHand().add(addedCard);
+        firstInstance.player1.getHand().add(addedCard);
+        firstInstance.player1.getHand().add(addedCard);
 
 
 
 
-        firstInstance.drawFromDeck(player1);
-        firstInstance.selectCard(player1,5);
-        boolean success1 = firstInstance.meldCard(player1);
+        firstInstance.drawFromDeck(firstInstance.player1);
+        firstInstance.selectCard(firstInstance.player1,5);
+        boolean success1 = firstInstance.meldCard(firstInstance.player1);
 
-        boolean success2 = firstInstance.meldCard(player1);
-        //firstInstance.undo(player1);
-        //firstInstance.meldCard(player1);
-        boolean success3 = firstInstance.meldCard(player1);
-        //firstInstance.addToDiscard(player1);
+        firstInstance.meldCard(firstInstance.player1);
+        firstInstance.undo(firstInstance.player1);
+        firstInstance.meldCard(firstInstance.player1);
+        firstInstance.meldCard(firstInstance.player1);
+        firstInstance.addToDiscard(firstInstance.player1);
 
-//        CanastaGameState secondInstance = new CanastaGameState(firstInstance);
-//        CanastaGameState thirdInstance = new CanastaGameState();
-//        thirdInstance.start();
-//        thirdInstance.setTextView(outText);
-//        CanastaGameState fourthInstance = new CanastaGameState(thirdInstance);
+        CanastaGameState secondInstance = new CanastaGameState(firstInstance);
+        CanastaGameState thirdInstance = new CanastaGameState();
+        thirdInstance.setTextView(outText);
+        CanastaGameState fourthInstance = new CanastaGameState(thirdInstance);
 
-        this.toString();
+        firstInstance.toString();
 //        secondInstance.toString();
 //        fourthInstance.toString();
         outText.invalidate();

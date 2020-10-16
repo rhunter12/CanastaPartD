@@ -87,59 +87,73 @@ public class CanastaPlayer {
         String info = "Player information: " + score + ", " + playerNum + "\n";
         info = info + "Hand: \n";
         for (Card c: hand) {
-            info = info + ", " + c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded Ace: \n";
         for (Card c: meldedAce) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded Wild: \n";
         for (Card c: meldedWild) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 3: \n";
         for (Card c: melded3) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 4: \n";
         for (Card c: melded4) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 5: \n";
         for (Card c: melded5) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 6: \n";
         for (Card c: melded6) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 7: \n";
         for (Card c: melded7) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 8: \n";
         for (Card c: melded8) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 9: \n";
         for (Card c: melded9) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded 10: \n";
         for (Card c: melded10) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded Jack: \n";
         for (Card c: meldedJack) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded Queen: \n";
         for (Card c: meldedQueen) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
         info = info + "\n Melded King: \n";
         for (Card c: meldedKing) {
-            info = info + ", " +  c.toString();
+            info = info + c.toString();
+            info = info + ", ";
         }
 
         return info;
