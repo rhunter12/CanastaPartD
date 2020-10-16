@@ -2,6 +2,7 @@ package edu.up.canastapartd;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,12 +20,14 @@ public class CanastaGameState implements Button.OnClickListener {
     int playerTurnID;
     int selectedCard = -1;
 
+    TextView outText;
+
     /**
      * Constructor
      */
     public CanastaGameState() {
-        deck = null;
-        discardPile = null;
+        //deck = null;
+        //discardPile = null;
         player1Score = 0;
         player2Score = 0;
         player1 = null;
@@ -48,6 +51,7 @@ public class CanastaGameState implements Button.OnClickListener {
         player1 = new CanastaPlayer(orig.player1);
         player2 = new CanastaPlayer(orig.player2);
         playerTurnID = orig.playerTurnID;
+        outText = orig.outText;
     }
 
     /**
@@ -138,6 +142,9 @@ public class CanastaGameState implements Button.OnClickListener {
     public boolean meldCard(CanastaPlayer p) {
         int pos = searchHand(p, selectedCard);;
 
+        if (pos == -1) {
+            return false;
+        }
         switch (selectedCard) {
             case -1:
                 return false;
@@ -159,7 +166,9 @@ public class CanastaGameState implements Button.OnClickListener {
                 break;
             case 5:
                 p.getPlayerMoves().add(5);
-                p.getMelded5().add(p.getHand().remove(pos));
+                ArrayList<Card> temp = new ArrayList<>();
+                temp = p.getMelded5();
+                temp.add(p.getHand().remove(pos));
                 break;
             case 6:
                 p.getPlayerMoves().add(6);
@@ -336,43 +345,61 @@ public class CanastaGameState implements Button.OnClickListener {
         player1 = new CanastaPlayer(1);
         player2 = new CanastaPlayer(2);
 
+        playerTurnID = 1;
         buildDeck();
         deal();
         return true;
     }
 
+    @Override
     public String toString() {
-        return null;
+        String ret = player1.toString();
+        outText.setText(ret);
+        return ret;
+    }
+
+    public void setTextView(TextView tv) {
+        outText = tv;
     }
 
 
     @Override
     public void onClick(View view) {
-        CanastaGameState firstInstance = new CanastaGameState();
-        firstInstance.start();
-        CanastaGameState secondInstance = new CanastaGameState(firstInstance);
-
+        this.start();
         //building pre-defined hand for testing
         Card addedCard = new Card(5,'H');
-        firstInstance.player1.getHand().add(addedCard);
-        firstInstance.player1.getHand().add(addedCard);
-        firstInstance.player1.getHand().add(addedCard);
-        firstInstance.player1.getHand().add(addedCard);
+        this.player1.getHand().add(addedCard);
+        this.player1.getHand().add(addedCard);
+        this.player1.getHand().add(addedCard);
+        this.player1.getHand().add(addedCard);
+
+        CanastaGameState firstInstance = new CanastaGameState();
+        firstInstance.start();
+        firstInstance.setTextView(outText);
+
+
+
 
         firstInstance.drawFromDeck(player1);
         firstInstance.selectCard(player1,5);
-        firstInstance.meldCard(player1);
-        firstInstance.meldCard(player1);
-        firstInstance.undo(player1);
-        firstInstance.meldCard(player1);
-        firstInstance.meldCard(player1);
-        firstInstance.addToDiscard(player1);
+        boolean success1 = firstInstance.meldCard(player1);
 
-        CanastaGameState thirdInstance = new CanastaGameState();
-        CanastaGameState fourthInstance = new CanastaGameState(thirdInstance);
+        boolean success2 = firstInstance.meldCard(player1);
+        //firstInstance.undo(player1);
+        //firstInstance.meldCard(player1);
+        boolean success3 = firstInstance.meldCard(player1);
+        //firstInstance.addToDiscard(player1);
 
-        secondInstance.toString();
-        fourthInstance.toString();
+//        CanastaGameState secondInstance = new CanastaGameState(firstInstance);
+//        CanastaGameState thirdInstance = new CanastaGameState();
+//        thirdInstance.start();
+//        thirdInstance.setTextView(outText);
+//        CanastaGameState fourthInstance = new CanastaGameState(thirdInstance);
+
+        this.toString();
+//        secondInstance.toString();
+//        fourthInstance.toString();
+        outText.invalidate();
     }
 
 

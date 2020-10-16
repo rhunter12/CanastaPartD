@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         runTest.setOnClickListener(state);
 
         TextView outputView = findViewById(R.id.output_view);
-
+        state.setTextView(outputView);
     }
 }

@@ -24,6 +24,11 @@ public class Card {
         knownCard = orig.knownCard;
     }
 
+    @Override
+    public String toString() {
+        return "" + suit + " " + value + " " + knownCard;
+    }
+
     public int getValue() {
         return value;
     }
