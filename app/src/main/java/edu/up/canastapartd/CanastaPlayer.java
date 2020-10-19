@@ -1,3 +1,10 @@
+/**
+ * @author
+ *      Ryan Hunter-Bliss
+ *      Sarah Ebner
+ *      Lute Lillo Portero
+ */
+
 package edu.up.canastapartd;
 
 import java.util.ArrayList;
@@ -24,13 +31,21 @@ public class CanastaPlayer {
 
     private ArrayList<Integer> playerMoves = new ArrayList<>();
 
+    /**
+     * Constructor
+     * @param num (The player number)
+     */
     public CanastaPlayer(int num) {
         score = 0;
-        //hand = new ArrayList<>();
+        hand = new ArrayList<>();
         playerNum = num;
         totalScore = 0;
     }
 
+    /**
+     * Copy constructor
+     * @param orig (The original player)
+     */
     public CanastaPlayer(CanastaPlayer orig) {
         score = orig.score;
         for (Card c: orig.hand) {
@@ -82,6 +97,10 @@ public class CanastaPlayer {
         totalScore = orig.totalScore;
     }
 
+    /**
+     * Converts a player info into a string
+     * @return (The string to be printed)
+     */
     @Override
     public String toString() {
         String info = "Player information: " + score + ", " + playerNum + "\n";
@@ -159,6 +178,11 @@ public class CanastaPlayer {
         return info;
     }
 
+    /**
+     * Copy constructor that can hide certain hand information
+     * @param orig (The original player)
+     * @param copyHand (Whether to copy the hand or not)
+     */
     public CanastaPlayer(CanastaPlayer orig, boolean copyHand) {
         score = orig.score;
         if (copyHand) {

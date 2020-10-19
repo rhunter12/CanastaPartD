@@ -1,3 +1,10 @@
+/**
+ * @author
+ *      Ryan Hunter-Bliss
+ *      Sarah Ebner
+ *      Lute Lillo Portero
+ */
+
 package edu.up.canastapartd;
 
 import androidx.appcompat.app.AppCompatActivity;

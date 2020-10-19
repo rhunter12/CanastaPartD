@@ -1,3 +1,10 @@
+/**
+ * @author
+ *      Ryan Hunter-Bliss
+ *      Sarah Ebner
+ *      Lute Lillo Portero
+ */
+
 package edu.up.canastapartd;
 
 import android.view.View;
@@ -11,14 +18,14 @@ import java.util.Collections;
 public class CanastaGameState implements Button.OnClickListener {
 
     // instance variables
-    ArrayList<Card> deck = new ArrayList<>();
-    ArrayList<Card> discardPile = new ArrayList<>();
+    ArrayList<Card> deck = new ArrayList<>(); //deck
+    ArrayList<Card> discardPile = new ArrayList<>(); //discard pile
     private int player1Score; //player 1 is the human
     private int player2Score; //player 2 is the AI
-    CanastaPlayer player1;
-    CanastaPlayer player2;
-    int playerTurnID;
-    int selectedCard = -1;
+    CanastaPlayer player1; //player 1
+    CanastaPlayer player2; //player 2
+    private int playerTurnID; //player turn ID
+    private int selectedCard = -1; //selected card
 
     TextView outText;
 
@@ -26,8 +33,8 @@ public class CanastaGameState implements Button.OnClickListener {
      * Constructor
      */
     public CanastaGameState() {
-        //deck = null;
-        //discardPile = null;
+        deck = new ArrayList<>();
+        discardPile = new ArrayList<>();
         player1Score = 0;
         player2Score = 0;
         player1 = null;
@@ -38,7 +45,7 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Copy constructor
-     * @param orig
+     * @param orig (Original game state)
      */
     public CanastaGameState(CanastaGameState orig) {
         for (Card c: orig.deck) {
@@ -74,7 +81,7 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Deals card to players, adds one to discard pile
-     * @return
+     * @return (Returns whether the action was successful or not)
      */
     public boolean deal() {
         for (int i = 0; i < 15; i++) {
@@ -91,8 +98,8 @@ public class CanastaGameState implements Button.OnClickListener {
     /**
      * Searches through hand for selected card to move to
      * discard pile
-     * @param p
-     * @return
+     * @param p (The player the action is from)
+     * @return (Returns whether the action was successful or not)
      */
     public boolean addToDiscard(CanastaPlayer p) {
         if (!(checkValidMeld(p))) {
@@ -111,7 +118,7 @@ public class CanastaGameState implements Button.OnClickListener {
     /**
      * Takes two cards from deck; checks if it is a red three and
      * handles it accordingly
-     * @param p
+     * @param p (The player the action is from)
      */
     public void drawFromDeck(CanastaPlayer p) {
         p.getHand().add(deck.remove(0));
@@ -121,8 +128,7 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Removes red three from hand and replaces it with something else
-     * @param p
-     * @return
+     * @param p (The player the action is from)
      */
     public void removeRedThree(CanastaPlayer p) {
         for (int i = 0; i < p.getHand().size(); i++) {
@@ -137,8 +143,8 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Adds a selected card to the player's meld
-     * @param p
-     * @return
+     * @param p (The player the action is from)
+     * @return (Returns whether the action was successful or not)
      */
     public boolean meldCard(CanastaPlayer p) {
         int pos = searchHand(p, selectedCard);;
@@ -209,9 +215,9 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Searches hand for selected card and returns index
-     * @param p
-     * @param n
-     * @return
+     * @param p (The player the action is from)
+     * @param n (The value being searched for)
+     * @return (Returns the index of the value in the hand)
      */
     public int searchHand(CanastaPlayer p, int n) {
         for (int i = 0; i < p.getHand().size(); i++) {
@@ -222,6 +228,13 @@ public class CanastaGameState implements Button.OnClickListener {
         return -1;
     }
 
+    /**
+     * Helper method to find the number of wild
+     * cards in a meld
+     * @param cards (The deck of cards to be searched)
+     * @param value (Which meld is being considered)
+     * @return (Returns the number of wild cards found)
+     */
     public int countWildCards(ArrayList<Card> cards, int value) {
         int wildCount = 0;
 
@@ -233,6 +246,12 @@ public class CanastaGameState implements Button.OnClickListener {
         return wildCount;
     }
 
+    /**
+     * Checks if all melds are of three or more cards
+     * and more than half of the cards are not a wild cards or not empty
+     * @param p (The player the action is from)
+     * @return (Returns whether the action was successful or not)
+     */
     public boolean checkValidMeld(CanastaPlayer p) {
         if (!((p.getMeldedAce().size() >= 3 && countWildCards(p.getMeldedAce(), 1) <= p.getMeldedAce().size()/2) || p.getMeldedAce().size() == 0)) {
             return false;
@@ -274,6 +293,11 @@ public class CanastaGameState implements Button.OnClickListener {
         return true;
     }
 
+    /**
+     * Allows player to unmeld a card based on their previous moves list
+     * @param p (The player the action is from)
+     * @return (Returns if the action was successful or not)
+     */
     public boolean undo(CanastaPlayer p) {
         if(p.getPlayerMoves().size() == 0) {
             return false;
@@ -325,9 +349,9 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Selects card
-     * @param p
-     * @param card
-     * @return
+     * @param p (The player the action is from)
+     * @param card (The card that is selected)
+     * @return (Returns whether the action was successful or not)
      */
     public boolean selectCard(CanastaPlayer p, int card) {
         if (playerTurnID == p.getPlayerNum()) {
@@ -340,7 +364,7 @@ public class CanastaGameState implements Button.OnClickListener {
 
     /**
      * Init players, call build deck
-     * @return
+     * @return (Returns whether the action was successful or not)
      */
     public boolean start() {
         player1 = new CanastaPlayer(1);
@@ -352,30 +376,35 @@ public class CanastaGameState implements Button.OnClickListener {
         return true;
     }
 
+    /**
+     * Converts player's hand and melds into strings
+     * @return (Returns the string to be printed)
+     */
     @Override
     public String toString() {
         String ret = player1.toString();
-        outText.setText(ret);
+        outText.append(ret);
         return ret;
     }
 
+    /**
+     * Assigns the text view from listener
+     * @param tv (The text view)
+     */
     public void setTextView(TextView tv) {
         outText = tv;
     }
 
 
+    /**
+     * Performs the testing actions once the button is clicked
+     * @param view (The view that is being updated)
+     */
     @Override
     public void onClick(View view) {
-//        this.start();
-//        //building pre-defined hand for testing
-//        Card addedCard = new Card(5,'H');
-//        this.player1.getHand().add(addedCard);
-//        this.player1.getHand().add(addedCard);
-//        this.player1.getHand().add(addedCard);
-//        this.player1.getHand().add(addedCard);
+        outText.setText("");
 
         CanastaGameState firstInstance = new CanastaGameState();
-        //firstInstance = this;
 
         firstInstance.setTextView(outText);
         Card addedCard = new Card(5,'H');
@@ -384,27 +413,33 @@ public class CanastaGameState implements Button.OnClickListener {
         firstInstance.player1.getHand().add(addedCard);
         firstInstance.player1.getHand().add(addedCard);
 
-
-
+        CanastaGameState secondInstance = new CanastaGameState(firstInstance);
 
         firstInstance.drawFromDeck(firstInstance.player1);
+        outText.append("Player one drew from the deck.\n");
         firstInstance.selectCard(firstInstance.player1,5);
-        boolean success1 = firstInstance.meldCard(firstInstance.player1);
+        outText.append("Player one selected a " + addedCard.getValue() + "\n");
+        firstInstance.meldCard(firstInstance.player1);
+        outText.append("Player one melded a " + firstInstance.selectedCard + "\n");
 
         firstInstance.meldCard(firstInstance.player1);
+        outText.append("Player one melded a " + firstInstance.selectedCard + "\n");
         firstInstance.undo(firstInstance.player1);
+        outText.append("Player one undid a melded.\n");
         firstInstance.meldCard(firstInstance.player1);
+        outText.append("Player one melded a " + firstInstance.selectedCard + "\n");
         firstInstance.meldCard(firstInstance.player1);
+        outText.append("Player one melded a " + firstInstance.selectedCard + "\n");
         firstInstance.addToDiscard(firstInstance.player1);
+        outText.append("Player one discarded\n\n");
 
-        CanastaGameState secondInstance = new CanastaGameState(firstInstance);
         CanastaGameState thirdInstance = new CanastaGameState();
         thirdInstance.setTextView(outText);
         CanastaGameState fourthInstance = new CanastaGameState(thirdInstance);
 
-        firstInstance.toString();
-//        secondInstance.toString();
-//        fourthInstance.toString();
+
+        secondInstance.toString();
+        fourthInstance.toString();
         outText.invalidate();
     }
 
